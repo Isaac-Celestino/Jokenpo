@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Pedra, Papel e Tesoura</title>
+</head>
+<body>
+    <header>
+        <h1>Jokenpô</h1>
+        <button id="btn-ajuda" class="btn-ajuda">Modo e Ajuda</button>
+    </header>
+    <main>
+        <section class="jogador">
+            <h3>Jogador: <span>escolha uma opção</span></h3>
+            <div class="opcao opcao-jogador">
+                <img opt="pedra" src="img/pedra.png" />
+                <img opt="papel" src="img/papel.png" />
+                <img opt="tesoura" src="img/tesoura.png" />
+            </div>
+        </section>
+        <section class="resultado">
+            <h3>Vencedor:</h3>
+            <p id="resultado"></p>
+        </section>
+        <section class="computador">
+            <h3>Computador</h3>
+            <div class="opcao opcao-computador">
+                <img opt="pedra" src="img/pedra.png" />
+                <img opt="papel" src="img/papel.png" />
+                <img opt="tesoura" src="img/tesoura.png" />
+            </div>
+        </section>
+    </main>
+    <!-- Modal de Ajuda -->
+    <div id="modal-ajuda" class="modal">
+        <div class="modal-conteudo">
+            <span class="fechar" id="fechar-modal">&times;</span>
+            <h2>Como Jogar Jokenpô</h2>
+            <p>O <strong>Jokenpô</strong> (também conhecido como Pedra, Papel e Tesoura) é um jogo simples e popular entre duas pessoas, onde cada jogador escolhe uma das três opções:</p>
+            <ul>
+                <li><strong>Pedra</strong> quebra <strong>Tesoura</strong></li>
+                <li><strong>Papel</strong> cobre <strong>Pedra</strong></li>
+                <li><strong>Tesoura</strong> corta <strong>Papel</strong></li>
+            </ul>
+            <p><strong>Objetivo:</strong> O objetivo do jogo é escolher a opção que vença a do computador. Se ambos escolherem a mesma opção, é um empate.</p>
+            <p><strong>Como Jogar:</strong> Clique em uma das opções abaixo para jogar contra o computador. O computador escolherá uma opção aleatória (ou de forma mais estratégica dependendo do modo de dificuldade).</p>
+            <p><strong>Modo Fácil:</strong> O computador escolhe aleatoriamente entre as opções (Pedra, Papel ou Tesoura). Não há nenhuma estratégia complexa envolvida, o que torna o jogo mais fácil.</p>
+            <p><strong>Modo Difícil:</strong> O computador tenta identificar padrões nas suas escolhas anteriores e prevê a sua próxima jogada para vencê-lo. O computador é mais desafiador nesse modo.</p>
+            <button class="btn-dificuldade" onclick="setDificuldade('facil')">Modo Fácil</button>
+            <button class="btn-dificuldade" onclick="setDificuldade('dificil')">Modo Difícil</button>
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>

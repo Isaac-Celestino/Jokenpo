@@ -1,70 +1,95 @@
-const elementos = document.querySelectorAll(".opcao-jogador div > img");
-let jogadorOpt = "";
+let jogadorEscolhas = [];
 let computadorOpt = "";
+let dificuldade = 'facil'; // Modo padrão
+
+// Função para configurar a dificuldade
+function setDificuldade(nivel) {
+  dificuldade = nivel;
+  alert(`Modo ${nivel.charAt(0).toUpperCase() + nivel.slice(1)} ativado!`);
+}
+
+// Função para analisar o padrão de escolhas do jogador
+function analisarEscolhasJogador() {
+  if (jogadorEscolhas.length < 2) return null;
+
+  const ultimaEscolha = jogadorEscolhas[jogadorEscolhas.length - 1];
+  const penultimaEscolha = jogadorEscolhas[jogadorEscolhas.length - 2];
+  
+  if (ultimaEscolha === penultimaEscolha) {
+    return ultimaEscolha === 'pedra' ? 'papel' :
+           ultimaEscolha === 'papel' ? 'tesoura' : 'pedra';
+  }
+
+  return null;
+}
+
+// Função que implementa a estratégia difícil
+function estrategiaDificil(jogadorEscolha) {
+  let escolhaPrevista = analisarEscolhasJogador();
+  if (escolhaPrevista) {
+    if (escolhaPrevista === 'pedra') return 1;
+    if (escolhaPrevista === 'papel') return 2;
+    if (escolhaPrevista === 'tesoura') return 0;
+  }
+  return Math.floor(Math.random() * 3);
+}
+
+function computadorJogar() {
+  let rand = (dificuldade === 'facil') ? Math.floor(Math.random() * 3) : estrategiaDificil(jogadorOpt);
+  const opcaoComputador = document.querySelectorAll(".opcao-computador img");
+  resetCoputador(opcaoComputador);
+  opcaoComputador[rand].style.opacity = 1;
+  computadorOpt = opcaoComputador[rand].getAttribute("opt");
+  validarVitoria();
+}
+
+const elementos = document.querySelectorAll(".opcao-jogador img");
+let jogadorOpt = "";
 
 function resetOpacityJogador() {
-  for (let i = 0; i < elementos.length; i++) {
-    elementos[i].style.opacity = 0.3;
-  }
+  elementos.forEach(img => img.style.opacity = 0.3);
 }
 
 function resetCoputador(opcaoComputador) {
-  for (let i = 0; i < opcaoComputador.length; i++) {
-    opcaoComputador[i].style.opacity = 0.3;
-  }
+  opcaoComputador.forEach(img => img.style.opacity = 0.3);
 }
 
 function validarVitoria() {
   let vencedor = document.querySelector("#resultado");
-  if (jogadorOpt == "pedra") {
-    if (computadorOpt == "pedra") {
-      vencedor.innerHTML = "O jogo foi empatado";
-    } else if (computadorOpt == "papel") {
-      vencedor.innerHTML = "O computador ganhou";
-    } else if (computadorOpt == "tesoura") {
-      vencedor.innerHTML = "Você Ganhou!!!";
-    }
-  } else if (jogadorOpt == "papel") {
-    if (computadorOpt == "pedra") {
-      vencedor.innerHTML = "Você Ganhou!!!";
-    } else if (computadorOpt == "papel") {
-      vencedor.innerHTML = "O jogo foi empatado";
-    } else if (computadorOpt == "tesoura") {
-      vencedor.innerHTML = "O computador ganhou";
-    }
-  } else if (jogadorOpt == "tesoura") {
-    if (computadorOpt == "pedra") {
-      vencedor.innerHTML = "O computador ganhou";
-    } else if (computadorOpt == "papel") {
-      vencedor.innerHTML = "Você Ganhou!!!";
-    } else if (computadorOpt == "tesoura") {
-      vencedor.innerHTML = "O jogo foi empatado";
-    }
+  if (jogadorOpt === computadorOpt) {
+    vencedor.innerHTML = "Empate!";
+  } else if (
+    (jogadorOpt === "pedra" && computadorOpt === "tesoura") ||
+    (jogadorOpt === "papel" && computadorOpt === "pedra") ||
+    (jogadorOpt === "tesoura" && computadorOpt === "papel")
+  ) {
+    vencedor.innerHTML = "Você Ganhou!!!";
+  } else {
+    vencedor.innerHTML = "O computador ganhou!";
   }
 }
 
-function computadorJogar() {
-  let rand = Math.floor(Math.random() * 3);
-  const opcaoComputador = document.querySelectorAll(
-    ".opcao-computador div > img"
-  );
-  resetCoputador(opcaoComputador);
+elementos.forEach(img => img.addEventListener('click', (e) => {
+  resetOpacityJogador();
+  e.target.style.opacity = 1;
+  jogadorOpt = e.target.getAttribute("opt");
+  jogadorEscolhas.push(jogadorOpt);
+  computadorJogar();
+}));
 
-  for (let i = 0; i < opcaoComputador.length; i++) {
-    if (i == rand) {
-      opcaoComputador[i].style.opacity = 1;
-      computadorOpt = opcaoComputador[i].getAttribute("opt");
-    }
-  }
-  validarVitoria();
-}
+// Modal
+const modal = document.getElementById("modal-ajuda");
+const btnAjuda = document.getElementById("btn-ajuda");
+const fecharModal = document.getElementById("fechar-modal");
 
-for (let i = 0; i < elementos.length; i++) {
-  elementos[i].addEventListener("click", function (t) {
-    resetOpacityJogador();
+btnAjuda.addEventListener("click", () => {
+  modal.style.display = "block";
+});
 
-    t.target.style.opacity = 1;
-    jogadorOpt = t.target.getAttribute("opt");
-    computadorJogar();
-  });
-}
+fecharModal.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+window.addEventListener("click", (e) => {
+  if (e.target === modal) modal.style.display = "none";
+});
