@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Jokenpô - Ultimate Edition</title>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <header>
+        <h1 class="title">JOKENPÔ</h1>
+        <div class="controls">
+            <button class="btn" id="btn-help">📖 Como Jogar</button>
+            <button class="btn difficulty" id="btn-easy">🟢 Fácil</button>
+            <button class="btn difficulty" id="btn-hard">🔴 Difícil</button>
+            <button class="btn" id="btn-reset">🔄 Reset</button>
+        </div>
+    </header>
+
+    <div class="game-container">
+        <div class="player-section">
+            <h3>🎮 Jogador</h3>
+            <div class="choices" id="player-choices">
+                <div class="choice" data-choice="rock">
+                    <span class="choice-emoji">🪨</span>
+                </div>
+                <div class="choice" data-choice="paper">
+                    <span class="choice-emoji">📄</span>
+                </div>
+                <div class="choice" data-choice="scissors">
+                    <span class="choice-emoji">✂️</span>
+                </div>
+            </div>
+            <div id="player-choice-text">Escolha sua jogada!</div>
+        </div>
+
+        <div class="vs-section">
+            <div class="vs-text">⚡ VS ⚡</div>
+            <div class="result" id="result">Faça sua escolha para começar!</div>
+        </div>
+
+        <div class="player-section">
+            <h3>🤖 Computador</h3>
+            <div class="choices" id="computer-choices">
+                <div class="choice" data-choice="rock">
+                    <span class="choice-emoji">🪨</span>
+                </div>
+                <div class="choice" data-choice="paper">
+                    <span class="choice-emoji">📄</span>
+                </div>
+                <div class="choice" data-choice="scissors">
+                    <span class="choice-emoji">✂️</span>
+                </div>
+            </div>
+            <div id="computer-choice-text">Aguardando...</div>
+        </div>
+    </div>
+
+    <div class="stats">
+        <div class="stat-item">
+            <div class="stat-number" id="wins">0</div>
+            <div>Vitórias</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="losses">0</div>
+            <div>Derrotas</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="draws">0</div>
+            <div>Empates</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-number" id="total">0</div>
+            <div>Total</div>
+        </div>
+    </div>
+
+    <div class="history">
+        <h3 style="text-align: center; margin-bottom: 15px;">📊 Histórico de Jogadas</h3>
+        <div id="history-list"></div>
+    </div>
+
+    <!-- Modal de Ajuda -->
+    <div id="help-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-modal">&times;</span>
+            <h2>🎯 Como Jogar Jokenpô</h2>
+            <div style="text-align: left; margin: 20px 0;">
+                <p><strong>🪨 Pedra</strong> quebra <strong>✂️ Tesoura</strong></p>
+                <p><strong>📄 Papel</strong> cobre <strong>🪨 Pedra</strong></p>
+                <p><strong>✂️ Tesoura</strong> corta <strong>📄 Papel</strong></p>
+            </div>
+            <h3>🎮 Modos de Dificuldade:</h3>
+            <div style="text-align: left; margin: 20px 0;">
+                <p><strong>🟢 Fácil:</strong> O computador joga aleatoriamente</p>
+                <p><strong>🔴 Difícil:</strong> O computador analisa seus padrões e tenta prever suas jogadas!</p>
+            </div>
+            <div style="margin-top: 30px;">
+                <button class="btn" onclick="closeModal()">Entendi! 🚀</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
